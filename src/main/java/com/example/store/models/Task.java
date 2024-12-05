@@ -2,42 +2,30 @@ package com.example.store.models;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-import java.util.Date;
 @Entity
-@Table(name = "task")
-public class Task  {
-    private Long task_id;
-    private String title;
-    private String description;
-    private Date due_date;
-    private String status;
-    private int priority;
-
-    private AppUser user_id;
-    private Category category_id;
-
-    public Task() {
-    }
-
-    public Task(String title, String description, Date due_date, String status, int priority, AppUser user_id, Category category_id) {
-        this.title = title;
-        this.description = description;
-        this.due_date = due_date;
-        this.status = status;
-        this.priority = priority;
-        this.user_id = user_id;
-        this.category_id = category_id;
-    }
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getTask_id() {
-        return task_id;
+    private long id;
+    private String title;
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "appUserId",nullable = false)
+    private AppUser appUser;
+
+    @ManyToOne
+    @JoinColumn(name="categoryId")
+    private Category category;
+
+    public long getId() {
+        return id;
     }
-    public void setTask_id(Long task_id) {
-        this.task_id = task_id;
+
+    public void setId(long id) {
+        this.id = id;
     }
-    @Column(name = "title", nullable = false)
+
     public String getTitle() {
         return title;
     }
@@ -45,7 +33,7 @@ public class Task  {
     public void setTitle(String title) {
         this.title = title;
     }
-    @Column(name = "description", nullable = false)
+
     public String getDescription() {
         return description;
     }
@@ -53,46 +41,20 @@ public class Task  {
     public void setDescription(String description) {
         this.description = description;
     }
-    @Column(name = "due_date", nullable = false)
-    public Date getDue_date() {
-        return due_date;
+
+    public AppUser getAppUser() {
+        return appUser;
     }
 
-    public void setDue_date(Date due_date) {
-        this.due_date = due_date;
-    }
-    @Column(name = "status", nullable = false)
-    public String getStatus() {
-        return status;
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    @Column(name = "priority", nullable = false)
-    public int getPriority() {
-        return priority;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-    @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
-    public AppUser getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(AppUser user_id) {
-        this.user_id = user_id;
-    }
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    public Category getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(Category category_id) {
-        this.category_id = category_id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

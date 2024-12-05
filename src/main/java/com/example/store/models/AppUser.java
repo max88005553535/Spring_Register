@@ -3,62 +3,33 @@ package com.example.store.models;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name="users")
-public class AppUser {
-
+public class AppUser  {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-    private String firstName;
-    private String lastName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long appUserId;
 
-    @Column(unique=true, nullable=false)
-    private String email;
+    private String username;
     private String password;
-    private String role;
-    private Date createdAt;
+    @OneToMany(mappedBy = "appUser",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public long getAppUserId() {
+        return appUserId;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setAppUserId(long appUserId) {
+        this.appUserId = appUserId;
     }
 
-    public Long getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -69,23 +40,11 @@ public class AppUser {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "AppUser{" +
-                "user_id=" + id +
-                ", first_name='" + firstName + '\'' +
-                ", last_name='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", registration_date=" + createdAt +
-                '}';
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

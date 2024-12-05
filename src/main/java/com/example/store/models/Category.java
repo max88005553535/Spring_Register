@@ -2,43 +2,38 @@ package com.example.store.models;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(name = "categories")
-public class Category  {
-    private Long category_id;
-    private String category_name;
-
-    public Category() {
-    }
-
-    public Category(String category_name) {
-        this.category_name = category_name;
-    }
-
+public class Category {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    public Long getCategory_id() {
-        return category_id;
-    }
-    public void setCategory_id(Long category_id) {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long categoryId;
+    private String categoryName;
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    private List<Task> task;
 
-        this.category_id = category_id;
-    }
-    @Column(name = "category_name",nullable = false)
-    public String getCategory_name() {
-        return category_name;
-    }
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    @Override
-    public String toString() {
-        return "Categories{" +
-                "category_id=" + category_id +
-                ", category_name='" + category_name + '\'' +
-                '}';
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public List<Task> getTask() {
+        return task;
+    }
+
+    public void setTask(List<Task> task) {
+        this.task = task;
     }
 }
